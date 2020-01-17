@@ -6,7 +6,7 @@ use ffi::types::{c_uint, c_void};
 use Error;
 use Secp256k1;
 
-#[cfg(feature = "std")]
+#[cfg(feature = "alloc")]
 pub use self::std_only::*;
 
 /// A trait for all kinds of Context's that Lets you define the exact flags and a function to deallocate memory.
@@ -53,8 +53,13 @@ mod private {
     impl<'buf> Sealed for SignOnlyPreallocated<'buf> {}
 }
 
-#[cfg(feature = "std")]
+#[cfg(feature = "alloc")]
 mod std_only {
+    #[cfg(not(feature = "std"))]
+    use alloc::boxed::Box;
+    #[cfg(not(feature = "std"))]
+    use alloc::vec;
+
     impl private::Sealed for SignOnly {}
     impl private::Sealed for All {}
     impl private::Sealed for VerifyOnly {}

@@ -23,8 +23,9 @@ path = "src/lib.rs"
 
 [features]
 unstable = []
+alloc = []
 default = ["std"]
-std = ["secp256k1-sys/std"]
+std = ["secp256k1-sys/std", "alloc"]
 rand-std = ["rand/std"]
 recovery = ["secp256k1-sys/recovery"]
 endomorphism = ["secp256k1-sys/endomorphism"]
